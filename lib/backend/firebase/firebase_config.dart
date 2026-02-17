@@ -5,13 +5,13 @@ Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-            apiKey: "AIzaSyDOcQa3lv6_qBSlVlGf3o-jOWElx0ax0R0",
+            apiKey: "AIzaSyARrGx7wbz8ZPPIxmG8hoMcLCwtjdzjr8w",
             authDomain: "caj-laundry-management-49191.firebaseapp.com",
             projectId: "caj-laundry-management-49191",
             storageBucket: "caj-laundry-management-49191.firebasestorage.app",
             messagingSenderId: "82008219104",
-            appId: "1:82008219104:web:91a3f0bf59c40d0a899f85",
-            measurementId: "G-23DBSESRYF"));
+            appId: "1:82008219104:web:96ae4d2453248270899f85",
+            measurementId: "G-HD7R1PKYLK"));
   } else {
     await Firebase.initializeApp();
   }

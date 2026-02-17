@@ -108,7 +108,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 5.0),
                   child: Container(
-                    width: 581.33,
+                    width: 581.3,
                     height: 239.1,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
@@ -448,9 +448,33 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                                     return;
                                   }
 
-                                  context.goNamedAuth(
-                                      HomeDashboardWidget.routeName,
-                                      context.mounted);
+                                  if (currentUserEmail !=
+                                      'admin@laundrymanagement.com') {
+                                    GoRouter.of(context).prepareAuthEvent();
+                                    await authManager.signOut();
+                                    GoRouter.of(context)
+                                        .clearRedirectLocation();
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Access Denied: You are not authorized.',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  } else {
+                                    context.pushNamedAuth(
+                                        HomeDashboardWidget.routeName,
+                                        context.mounted);
+                                  }
                                 },
                                 text: 'Log In',
                                 options: FFButtonOptions(
