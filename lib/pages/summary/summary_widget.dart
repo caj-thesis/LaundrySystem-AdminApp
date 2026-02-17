@@ -386,7 +386,7 @@ class _SummaryWidgetState extends State<SummaryWidget> {
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        'Summary',
+                                                        'Sales',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -657,7 +657,7 @@ class _SummaryWidgetState extends State<SummaryWidget> {
                                                   1.0,
                                           height: MediaQuery.sizeOf(context)
                                                   .height *
-                                              0.9,
+                                              0.85,
                                           decoration: BoxDecoration(),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
