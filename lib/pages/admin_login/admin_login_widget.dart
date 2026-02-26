@@ -405,6 +405,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                                   0.0, 0.0, 0.0, 16.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  Function() _navigate = () {};
                                   GoRouter.of(context).prepareAuthEvent();
 
                                   final user =
@@ -417,6 +418,9 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                                     return;
                                   }
 
+                                  _navigate = () => context.goNamedAuth(
+                                      HomePageWidget.routeName,
+                                      context.mounted);
                                   if (currentUserEmail !=
                                       'admin@laundrymanagement.com') {
                                     GoRouter.of(context).prepareAuthEvent();
@@ -424,6 +428,9 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                                     GoRouter.of(context)
                                         .clearRedirectLocation();
 
+                                    _navigate = () => context.goNamedAuth(
+                                        AdminLoginWidget.routeName,
+                                        context.mounted);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
@@ -439,11 +446,9 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget>
                                                 .secondary,
                                       ),
                                     );
-                                  } else {
-                                    context.pushNamedAuth(
-                                        HomePageWidget.routeName,
-                                        context.mounted);
                                   }
+
+                                  _navigate();
                                 },
                                 text: 'Log In',
                                 options: FFButtonOptions(

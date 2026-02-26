@@ -494,7 +494,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                     Text(
                                       valueOrDefault<String>(
                                         containerTransactionsRecord.timestamp,
-                                        'February 24, 2026 at 6:56:02 PM UTC+8',
+                                        'February 24, 2026 at 6:56:02 PM',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -538,9 +538,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        containerTransactionsRecord.doneAt
-                                            ?.toString(),
-                                        'February 24, 2026 at 6:56:02 PM UTC+8',
+                                        dateTimeFormat(
+                                            "MMMM d, yyyy \'at\' h:mm:ss a",
+                                            containerTransactionsRecord
+                                                .doneAt),
+                                        'February 24, 2026 at 6:56:02 PM',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -584,10 +586,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        containerTransactionsRecord
-                                            .reminderSentAt
-                                            ?.toString(),
-                                        'February 24, 2026 at 6:56:02 PM UTC+8',
+                                        dateTimeFormat(
+                                            "MMMM d, yyyy \'at\' h:mm:ss a",
+                                            containerTransactionsRecord
+                                                .reminderSentAt),
+                                        'February 24, 2026 at 6:56:02 PM',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -631,9 +634,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        containerTransactionsRecord.pickedUpAt
-                                            ?.toString(),
-                                        'February 24, 2026 at 6:56:02 PM UTC+8',
+                                        dateTimeFormat(
+                                            "MMMM d, yyyy \'at\' h:mm:ss a",
+                                            containerTransactionsRecord
+                                                .pickedUpAt),
+                                        'February 24, 2026 at 6:56:02 PM',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -677,9 +682,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                     ),
                                     Text(
                                       valueOrDefault<String>(
-                                        columnOverdueLogsRecord.archivedAt
-                                            ?.toString(),
-                                        'February 24, 2026 at 6:56:02 PM UTC+8',
+                                        dateTimeFormat(
+                                            "MMMM d, yyyy \'at\' h:mm:ss a",
+                                            columnOverdueLogsRecord
+                                                .archivedAt),
+                                        'February 24, 2026 at 6:56:02 PM',
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
