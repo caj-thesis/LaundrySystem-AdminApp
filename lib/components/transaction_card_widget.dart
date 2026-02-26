@@ -409,430 +409,75 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                         ),
                   ),
                 ),
-                FlipCard(
-                  fill: Fill.fillBack,
-                  direction: FlipDirection.HORIZONTAL,
-                  speed: 400,
-                  front: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    decoration: BoxDecoration(
-                      color: Color(0x6CEEEEEE),
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Color(0xFFDFDFDF),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          10.0, 20.0, 10.0, 20.0),
-                      child: StreamBuilder<List<OverdueLogsRecord>>(
-                        stream: queryOverdueLogsRecord(
-                          queryBuilder: (overdueLogsRecord) =>
-                              overdueLogsRecord.where(
-                            'transactionId',
-                            isEqualTo:
-                                containerTransactionsRecord?.transactionId,
-                          ),
-                          singleRecord: true,
+                Flexible(
+                  child: FlipCard(
+                    fill: Fill.fillBack,
+                    direction: FlipDirection.HORIZONTAL,
+                    speed: 400,
+                    front: Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      decoration: BoxDecoration(
+                        color: Color(0x6CEEEEEE),
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: Color(0xFFDFDFDF),
                         ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 20.0, 10.0, 20.0),
+                        child: StreamBuilder<List<OverdueLogsRecord>>(
+                          stream: queryOverdueLogsRecord(
+                            queryBuilder: (overdueLogsRecord) =>
+                                overdueLogsRecord.where(
+                              'transactionId',
+                              isEqualTo:
+                                  containerTransactionsRecord?.transactionId,
+                            ),
+                            singleRecord: true,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }
-                          List<OverdueLogsRecord> columnOverdueLogsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the item does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final columnOverdueLogsRecord =
-                              columnOverdueLogsRecordList.isNotEmpty
-                                  ? columnOverdueLogsRecordList.first
-                                  : null;
+                              );
+                            }
+                            List<OverdueLogsRecord>
+                                columnOverdueLogsRecordList = snapshot.data!;
+                            // Return an empty Container when the item does not exist.
+                            if (snapshot.data!.isEmpty) {
+                              return Container();
+                            }
+                            final columnOverdueLogsRecord =
+                                columnOverdueLogsRecordList.isNotEmpty
+                                    ? columnOverdueLogsRecordList.first
+                                    : null;
 
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              if (containerTransactionsRecord != null)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Dropped At',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                    Text(
-                                      valueOrDefault<String>(
-                                        containerTransactionsRecord.timestamp,
-                                        'February 24, 2026 at 6:56:02 PM',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              if (containerTransactionsRecord != null)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Done At',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                    Text(
-                                      valueOrDefault<String>(
-                                        dateTimeFormat(
-                                            "MMMM d, yyyy \'at\' h:mm:ss a",
-                                            containerTransactionsRecord
-                                                .doneAt),
-                                        'February 24, 2026 at 6:56:02 PM',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              if (containerTransactionsRecord != null)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Reminder Sent At',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                    Text(
-                                      valueOrDefault<String>(
-                                        dateTimeFormat(
-                                            "MMMM d, yyyy \'at\' h:mm:ss a",
-                                            containerTransactionsRecord
-                                                .reminderSentAt),
-                                        'February 24, 2026 at 6:56:02 PM',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              if (containerTransactionsRecord != null)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Picked Up At',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                    Text(
-                                      valueOrDefault<String>(
-                                        dateTimeFormat(
-                                            "MMMM d, yyyy \'at\' h:mm:ss a",
-                                            containerTransactionsRecord
-                                                .pickedUpAt),
-                                        'February 24, 2026 at 6:56:02 PM',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              if (columnOverdueLogsRecord != null)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Archived At',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                    Text(
-                                      valueOrDefault<String>(
-                                        dateTimeFormat(
-                                            "MMMM d, yyyy \'at\' h:mm:ss a",
-                                            columnOverdueLogsRecord
-                                                .archivedAt),
-                                        'February 24, 2026 at 6:56:02 PM',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                            ].divide(SizedBox(height: 10.0)),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  back: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    decoration: BoxDecoration(
-                      color: Color(0x6CEEEEEE),
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Color(0xFFDFDFDF),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          10.0, 20.0, 10.0, 20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Flex(
-                                direction: Axis.vertical,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                if (containerTransactionsRecord != null)
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
-                                        Icons.lock,
+                                        Icons.date_range,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
                                         size: 24.0,
                                       ),
                                       Text(
-                                        'Locker Number',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
-                                      Text(
-                                        valueOrDefault<String>(
-                                          containerTransactionsRecord?.lockerId
-                                              .toString(),
-                                          '0',
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              letterSpacing: 0.0,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Icon(
-                                        Icons.pin,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      Text(
-                                        'Pin Code',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
-                                      Text(
-                                        valueOrDefault<String>(
-                                          containerTransactionsRecord?.pin,
-                                          '0000',
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              letterSpacing: 0.0,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Icon(
-                                        Icons.phone,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      Text(
-                                        'Phone Number',
+                                        'Dropped At',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -851,8 +496,8 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       Text(
                                         valueOrDefault<String>(
                                           containerTransactionsRecord
-                                              ?.phoneNumber,
-                                          '09xxxxxxxxx',
+                                              .timestamp,
+                                          'February 24, 2026 at 6:56:02 PM',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -868,23 +513,18 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                     ],
                                   ),
-                                ].divide(SizedBox(height: 20.0)),
-                              ),
-                              Flex(
-                                direction: Axis.vertical,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
+                                if (containerTransactionsRecord != null)
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
-                                        Icons.local_laundry_service,
+                                        Icons.date_range,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
                                         size: 24.0,
                                       ),
                                       Text(
-                                        'Laundry Type',
+                                        'Done At',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -902,8 +542,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                       Text(
                                         valueOrDefault<String>(
-                                          containerTransactionsRecord?.type,
-                                          'Clothes',
+                                          dateTimeFormat(
+                                              "MMMM d, yyyy \'at\' h:mm:ss a",
+                                              containerTransactionsRecord
+                                                  .doneAt),
+                                          'February 24, 2026 at 6:56:02 PM',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -919,17 +562,18 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                     ],
                                   ),
+                                if (containerTransactionsRecord != null)
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
-                                        Icons.line_weight,
+                                        Icons.date_range,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
                                         size: 24.0,
                                       ),
                                       Text(
-                                        'Weight (kg)',
+                                        'Reminder Sent At',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -947,9 +591,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                       Text(
                                         valueOrDefault<String>(
-                                          containerTransactionsRecord?.weight
-                                              .toString(),
-                                          '0.0',
+                                          dateTimeFormat(
+                                              "MMMM d, yyyy \'at\' h:mm:ss a",
+                                              containerTransactionsRecord
+                                                  .reminderSentAt),
+                                          'February 24, 2026 at 6:56:02 PM',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -965,17 +611,18 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                     ],
                                   ),
+                                if (containerTransactionsRecord != null)
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
-                                        Icons.attach_money_rounded,
+                                        Icons.date_range,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
                                         size: 24.0,
                                       ),
                                       Text(
-                                        'Price (₱)',
+                                        'Picked Up At',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -993,9 +640,11 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                       Text(
                                         valueOrDefault<String>(
-                                          containerTransactionsRecord?.price
-                                              .toString(),
-                                          '0',
+                                          dateTimeFormat(
+                                              "MMMM d, yyyy \'at\' h:mm:ss a",
+                                              containerTransactionsRecord
+                                                  .pickedUpAt),
+                                          'February 24, 2026 at 6:56:02 PM',
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -1011,11 +660,383 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
                                       ),
                                     ],
                                   ),
-                                ].divide(SizedBox(height: 20.0)),
-                              ),
-                            ],
-                          ),
-                        ],
+                                if (columnOverdueLogsRecord != null)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        Icons.date_range,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        'Archived At',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                              useGoogleFonts:
+                                                  !FlutterFlowTheme.of(context)
+                                                      .bodyMediumIsCustom,
+                                            ),
+                                      ),
+                                      Text(
+                                        valueOrDefault<String>(
+                                          dateTimeFormat(
+                                              "MMMM d, yyyy \'at\' h:mm:ss a",
+                                              columnOverdueLogsRecord
+                                                  .archivedAt),
+                                          'February 24, 2026 at 6:56:02 PM',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              letterSpacing: 0.0,
+                                              useGoogleFonts:
+                                                  !FlutterFlowTheme.of(context)
+                                                      .bodyMediumIsCustom,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                              ].divide(SizedBox(height: 10.0)),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    back: Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      decoration: BoxDecoration(
+                        color: Color(0x6CEEEEEE),
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: Color(0xFFDFDFDF),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            10.0, 20.0, 10.0, 20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Flex(
+                                  direction: Axis.vertical,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.lock,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Locker Number',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord
+                                                ?.lockerId
+                                                .toString(),
+                                            '0',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.pin,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Pin Code',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord?.pin,
+                                            '0000',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.phone,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Phone Number',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord
+                                                ?.phoneNumber,
+                                            '09xxxxxxxxx',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ].divide(SizedBox(height: 20.0)),
+                                ),
+                                Flex(
+                                  direction: Axis.vertical,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.local_laundry_service,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Laundry Type',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord?.type,
+                                            'Clothes',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.line_weight,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Weight (kg)',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord?.weight
+                                                .toString(),
+                                            '0.0',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.attach_money_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Price (₱)',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            containerTransactionsRecord?.price
+                                                .toString(),
+                                            '0',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                letterSpacing: 0.0,
+                                                useGoogleFonts:
+                                                    !FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMediumIsCustom,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ].divide(SizedBox(height: 20.0)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
