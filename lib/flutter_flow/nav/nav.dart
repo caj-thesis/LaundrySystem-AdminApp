@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -75,16 +76,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? HomeDashboardWidget()
-          : AdminLoginWidget(),
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? NavBarPage() : AdminLoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? HomeDashboardWidget()
-              : AdminLoginWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? NavBarPage() : AdminLoginWidget(),
         ),
         FFRoute(
           name: AdminLoginWidget.routeName,
@@ -92,24 +91,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AdminLoginWidget(),
         ),
         FFRoute(
-          name: HomeDashboardWidget.routeName,
-          path: HomeDashboardWidget.routePath,
-          builder: (context, params) => HomeDashboardWidget(),
+          name: HomePageWidget.routeName,
+          path: HomePageWidget.routePath,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'HomePage')
+              : HomePageWidget(),
         ),
         FFRoute(
-          name: RecordDashboardWidget.routeName,
-          path: RecordDashboardWidget.routePath,
-          builder: (context, params) => RecordDashboardWidget(),
-        ),
-        FFRoute(
-          name: SummaryWidget.routeName,
-          path: SummaryWidget.routePath,
-          builder: (context, params) => SummaryWidget(),
-        ),
-        FFRoute(
-          name: ChangePricePageWidget.routeName,
-          path: ChangePricePageWidget.routePath,
-          builder: (context, params) => ChangePricePageWidget(),
+          name: TransactionsPageWidget.routeName,
+          path: TransactionsPageWidget.routePath,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'TransactionsPage')
+              : TransactionsPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -311,6 +304,7 @@ class FFRoute {
           return transitionInfo.hasTransition
               ? CustomTransitionPage(
                   key: state.pageKey,
+                  name: state.name,
                   child: child,
                   transitionDuration: transitionInfo.duration,
                   transitionsBuilder:
@@ -328,7 +322,8 @@ class FFRoute {
                     child,
                   ),
                 )
-              : MaterialPage(key: state.pageKey, child: child);
+              : MaterialPage(
+                  key: state.pageKey, name: state.name, child: child);
         },
         routes: routes,
       );

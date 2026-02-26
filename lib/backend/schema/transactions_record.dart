@@ -40,11 +40,6 @@ class TransactionsRecord extends FirestoreRecord {
   String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
-  // "timestamp" field.
-  DateTime? _timestamp;
-  DateTime? get timestamp => _timestamp;
-  bool hasTimestamp() => _timestamp != null;
-
   // "transactionId" field.
   String? _transactionId;
   String get transactionId => _transactionId ?? '';
@@ -90,13 +85,27 @@ class TransactionsRecord extends FirestoreRecord {
   DateTime? get reminderSentAt => _reminderSentAt;
   bool hasReminderSentAt() => _reminderSentAt != null;
 
+  // "doneAt" field.
+  DateTime? _doneAt;
+  DateTime? get doneAt => _doneAt;
+  bool hasDoneAt() => _doneAt != null;
+
+  // "archivedAt" field.
+  DateTime? _archivedAt;
+  DateTime? get archivedAt => _archivedAt;
+  bool hasArchivedAt() => _archivedAt != null;
+
+  // "timestamp" field.
+  String? _timestamp;
+  String get timestamp => _timestamp ?? '';
+  bool hasTimestamp() => _timestamp != null;
+
   void _initializeFields() {
     _lockerId = castToType<int>(snapshotData['lockerId']);
     _pickedUpAt = snapshotData['pickedUpAt'] as DateTime?;
     _pin = snapshotData['pin'] as String?;
     _price = castToType<double>(snapshotData['price']);
     _status = snapshotData['status'] as String?;
-    _timestamp = snapshotData['timestamp'] as DateTime?;
     _transactionId = snapshotData['transactionId'] as String?;
     _type = snapshotData['type'] as String?;
     _weight = castToType<double>(snapshotData['weight']);
@@ -106,6 +115,9 @@ class TransactionsRecord extends FirestoreRecord {
     _triggerPrint = snapshotData['triggerPrint'] as bool?;
     _reminderSent = snapshotData['reminderSent'] as bool?;
     _reminderSentAt = snapshotData['reminderSentAt'] as DateTime?;
+    _doneAt = snapshotData['doneAt'] as DateTime?;
+    _archivedAt = snapshotData['archivedAt'] as DateTime?;
+    _timestamp = snapshotData['timestamp'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -148,7 +160,6 @@ Map<String, dynamic> createTransactionsRecordData({
   String? pin,
   double? price,
   String? status,
-  DateTime? timestamp,
   String? transactionId,
   String? type,
   double? weight,
@@ -158,6 +169,9 @@ Map<String, dynamic> createTransactionsRecordData({
   bool? triggerPrint,
   bool? reminderSent,
   DateTime? reminderSentAt,
+  DateTime? doneAt,
+  DateTime? archivedAt,
+  String? timestamp,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -166,7 +180,6 @@ Map<String, dynamic> createTransactionsRecordData({
       'pin': pin,
       'price': price,
       'status': status,
-      'timestamp': timestamp,
       'transactionId': transactionId,
       'type': type,
       'weight': weight,
@@ -176,6 +189,9 @@ Map<String, dynamic> createTransactionsRecordData({
       'triggerPrint': triggerPrint,
       'reminderSent': reminderSent,
       'reminderSentAt': reminderSentAt,
+      'doneAt': doneAt,
+      'archivedAt': archivedAt,
+      'timestamp': timestamp,
     }.withoutNulls,
   );
 
@@ -193,7 +209,6 @@ class TransactionsRecordDocumentEquality
         e1?.pin == e2?.pin &&
         e1?.price == e2?.price &&
         e1?.status == e2?.status &&
-        e1?.timestamp == e2?.timestamp &&
         e1?.transactionId == e2?.transactionId &&
         e1?.type == e2?.type &&
         e1?.weight == e2?.weight &&
@@ -202,7 +217,10 @@ class TransactionsRecordDocumentEquality
         e1?.triggerReminder == e2?.triggerReminder &&
         e1?.triggerPrint == e2?.triggerPrint &&
         e1?.reminderSent == e2?.reminderSent &&
-        e1?.reminderSentAt == e2?.reminderSentAt;
+        e1?.reminderSentAt == e2?.reminderSentAt &&
+        e1?.doneAt == e2?.doneAt &&
+        e1?.archivedAt == e2?.archivedAt &&
+        e1?.timestamp == e2?.timestamp;
   }
 
   @override
@@ -212,7 +230,6 @@ class TransactionsRecordDocumentEquality
         e?.pin,
         e?.price,
         e?.status,
-        e?.timestamp,
         e?.transactionId,
         e?.type,
         e?.weight,
@@ -221,7 +238,10 @@ class TransactionsRecordDocumentEquality
         e?.triggerReminder,
         e?.triggerPrint,
         e?.reminderSent,
-        e?.reminderSentAt
+        e?.reminderSentAt,
+        e?.doneAt,
+        e?.archivedAt,
+        e?.timestamp
       ]);
 
   @override
