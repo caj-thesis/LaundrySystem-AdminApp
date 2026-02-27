@@ -40,11 +40,6 @@ class OverdueLogsRecord extends FirestoreRecord {
   String get status => _status ?? '';
   bool hasStatus() => _status != null;
 
-  // "timestamp" field.
-  DateTime? _timestamp;
-  DateTime? get timestamp => _timestamp;
-  bool hasTimestamp() => _timestamp != null;
-
   // "transactionId" field.
   String? _transactionId;
   String get transactionId => _transactionId ?? '';
@@ -81,7 +76,6 @@ class OverdueLogsRecord extends FirestoreRecord {
     _pin = snapshotData['pin'] as String?;
     _price = castToType<double>(snapshotData['price']);
     _status = snapshotData['status'] as String?;
-    _timestamp = snapshotData['timestamp'] as DateTime?;
     _transactionId = snapshotData['transactionId'] as String?;
     _type = snapshotData['type'] as String?;
     _weight = castToType<double>(snapshotData['weight']);
@@ -130,7 +124,6 @@ Map<String, dynamic> createOverdueLogsRecordData({
   String? pin,
   double? price,
   String? status,
-  DateTime? timestamp,
   String? transactionId,
   String? type,
   double? weight,
@@ -145,7 +138,6 @@ Map<String, dynamic> createOverdueLogsRecordData({
       'pin': pin,
       'price': price,
       'status': status,
-      'timestamp': timestamp,
       'transactionId': transactionId,
       'type': type,
       'weight': weight,
@@ -168,7 +160,6 @@ class OverdueLogsRecordDocumentEquality implements Equality<OverdueLogsRecord> {
         e1?.pin == e2?.pin &&
         e1?.price == e2?.price &&
         e1?.status == e2?.status &&
-        e1?.timestamp == e2?.timestamp &&
         e1?.transactionId == e2?.transactionId &&
         e1?.type == e2?.type &&
         e1?.weight == e2?.weight &&
@@ -184,7 +175,6 @@ class OverdueLogsRecordDocumentEquality implements Equality<OverdueLogsRecord> {
         e?.pin,
         e?.price,
         e?.status,
-        e?.timestamp,
         e?.transactionId,
         e?.type,
         e?.weight,

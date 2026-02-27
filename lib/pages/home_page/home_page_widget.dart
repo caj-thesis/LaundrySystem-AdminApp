@@ -56,7 +56,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               borderRadius: 10.0,
               borderWidth: 1.0,
               buttonSize: 50.0,
-              fillColor: Color(0x4E007BFF),
+              fillColor: FlutterFlowTheme.of(context).iconBackground,
               icon: Icon(
                 Icons.local_laundry_service,
                 color: FlutterFlowTheme.of(context).primary,
@@ -1259,13 +1259,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                       ),
                     ),
-                    StreamBuilder<List<TransactionsRecord>>(
-                      stream: queryTransactionsRecord(
-                        queryBuilder: (transactionsRecord) =>
-                            transactionsRecord.where(
-                          'status',
-                          isEqualTo: 'overdue_archived',
-                        ),
+                    StreamBuilder<List<OverdueLogsRecord>>(
+                      stream: queryOverdueLogsRecord(
+                        queryBuilder: (overdueLogsRecord) =>
+                            overdueLogsRecord.orderBy('archivedAt'),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
@@ -1282,20 +1279,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           );
                         }
-                        List<TransactionsRecord>
-                            listViewTransactionsRecordList = snapshot.data!;
+                        List<OverdueLogsRecord> listViewOverdueLogsRecordList =
+                            snapshot.data!;
 
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: listViewTransactionsRecordList.length,
+                          itemCount: listViewOverdueLogsRecordList.length,
                           itemBuilder: (context, listViewIndex) {
-                            final listViewTransactionsRecord =
-                                listViewTransactionsRecordList[listViewIndex];
+                            final listViewOverdueLogsRecord =
+                                listViewOverdueLogsRecordList[listViewIndex];
                             return Visibility(
-                              visible: listViewTransactionsRecord.status ==
-                                  'overdue_archived',
+                              visible: listViewOverdueLogsRecord.status ==
+                                  'paid_pending',
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -1319,7 +1316,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               MediaQuery.viewInsetsOf(context),
                                           child: OverdueTransactionCardWidget(
                                             targetTransaction:
-                                                listViewTransactionsRecord
+                                                listViewOverdueLogsRecord
                                                     .transactionId,
                                           ),
                                         ),
@@ -1354,7 +1351,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               size: 12.0,
                                             ),
                                             Text(
-                                              listViewTransactionsRecord
+                                              listViewOverdueLogsRecord
                                                   .transactionId,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -1377,7 +1374,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           valueOrDefault<String>(
                                             dateTimeFormat(
                                                 "yMd",
-                                                listViewTransactionsRecord
+                                                listViewOverdueLogsRecord
                                                     .archivedAt),
                                             '0/00/0000',
                                           ),

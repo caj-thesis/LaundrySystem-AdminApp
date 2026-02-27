@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -131,7 +130,7 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Locker Details',
@@ -144,18 +143,6 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .titleLargeIsCustom,
                                 ),
-                          ),
-                          FlutterFlowIconButton(
-                            borderRadius: 8.0,
-                            buttonSize: 40.0,
-                            icon: Icon(
-                              Icons.close,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24.0,
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
                           ),
                         ],
                       ),
@@ -443,8 +430,7 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Flex(
                                       direction: Axis.vertical,
@@ -676,7 +662,7 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                         ),
                                       ].divide(SizedBox(height: 20.0)),
                                     ),
-                                  ],
+                                  ].divide(SizedBox(width: 50.0)),
                                 ),
                               ].divide(SizedBox(height: 10.0)),
                             ),
@@ -717,11 +703,12 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                           },
                                         ) ??
                                         false;
-
-                                await containerTransactionsRecord!.reference
-                                    .update(createTransactionsRecordData(
-                                  laundryStatus: 'Washing',
-                                ));
+                                if (confirmDialogResponse) {
+                                  await containerTransactionsRecord!.reference
+                                      .update(createTransactionsRecordData(
+                                    laundryStatus: 'Washing',
+                                  ));
+                                }
                               },
                               text: 'Washing',
                               icon: Icon(
@@ -784,11 +771,12 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                           },
                                         ) ??
                                         false;
-
-                                await containerTransactionsRecord!.reference
-                                    .update(createTransactionsRecordData(
-                                  laundryStatus: 'Done',
-                                ));
+                                if (confirmDialogResponse) {
+                                  await containerTransactionsRecord!.reference
+                                      .update(createTransactionsRecordData(
+                                    laundryStatus: 'Done',
+                                  ));
+                                }
                               },
                               text: 'Ready for Pick-Up',
                               icon: Icon(
@@ -853,11 +841,12 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                             },
                                           ) ??
                                           false;
-
-                                  await containerTransactionsRecord.reference
-                                      .update(createTransactionsRecordData(
-                                    laundryStatus: 'Done',
-                                  ));
+                                  if (confirmDialogResponse) {
+                                    await containerTransactionsRecord.reference
+                                        .update(createTransactionsRecordData(
+                                      laundryStatus: 'Done',
+                                    ));
+                                  }
                                 } else {
                                   await showDialog(
                                     context: context,
@@ -949,11 +938,12 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                           },
                                         ) ??
                                         false;
-
-                                await widget.lockerRef!
-                                    .update(createLockersRecordData(
-                                  action: 'unlock',
-                                ));
+                                if (confirmDialogResponse) {
+                                  await widget.lockerRef!
+                                      .update(createLockersRecordData(
+                                    action: 'unlock',
+                                  ));
+                                }
                               } else {
                                 var confirmDialogResponse =
                                     await showDialog<bool>(
@@ -983,11 +973,12 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                           },
                                         ) ??
                                         false;
-
-                                await widget.lockerRef!
-                                    .update(createLockersRecordData(
-                                  action: 'lock',
-                                ));
+                                if (confirmDialogResponse) {
+                                  await widget.lockerRef!
+                                      .update(createLockersRecordData(
+                                    action: 'lock',
+                                  ));
+                                }
                               }
                             },
                             child: FFButtonWidget(

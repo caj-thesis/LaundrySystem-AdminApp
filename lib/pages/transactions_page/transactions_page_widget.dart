@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/components/transaction_card_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
@@ -8,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -84,7 +84,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
               borderRadius: 10.0,
               borderWidth: 1.0,
               buttonSize: 50.0,
-              fillColor: Color(0x4E007BFF),
+              fillColor: FlutterFlowTheme.of(context).iconBackground,
               icon: Icon(
                 Icons.local_laundry_service,
                 color: FlutterFlowTheme.of(context).primary,
@@ -637,112 +637,116 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                               Align(
                                                 alignment: AlignmentDirectional(
                                                     0.0, 0.0),
-                                                child: FlutterFlowChoiceChips(
-                                                  options: [
-                                                    ChipData('Dropped'),
-                                                    ChipData('Washing'),
-                                                    ChipData('Done'),
-                                                    ChipData('Archived')
-                                                  ],
-                                                  onChanged: (val) =>
-                                                      safeSetState(() => _model
-                                                              .laundryStatusChipsValue =
-                                                          val?.firstOrNull),
-                                                  selectedChipStyle: ChipStyle(
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
-                                                    textStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              fontFamily:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMediumFamily,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              useGoogleFonts:
-                                                                  !FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMediumIsCustom,
-                                                            ),
-                                                    iconColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryBackground,
-                                                    iconSize: 18.0,
-                                                    elevation: 0.0,
-                                                    borderWidth: 1.0,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  unselectedChipStyle:
-                                                      ChipStyle(
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondaryBackground,
-                                                    textStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodySmall
-                                                            .override(
-                                                              fontFamily:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmallFamily,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              useGoogleFonts:
-                                                                  !FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmallIsCustom,
-                                                            ),
-                                                    iconColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText,
-                                                    iconSize: 18.0,
-                                                    elevation: 0.0,
-                                                    borderColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .alternate,
-                                                    borderWidth: 1.0,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  chipSpacing: 8.0,
-                                                  rowSpacing: 8.0,
-                                                  multiselect: false,
-                                                  initialized: _model
-                                                          .laundryStatusChipsValue !=
-                                                      null,
-                                                  alignment:
-                                                      WrapAlignment.start,
-                                                  controller: _model
-                                                          .laundryStatusChipsValueController ??=
-                                                      FormFieldController<
-                                                          List<String>>(
-                                                    [
-                                                      _model
-                                                          .laundryStatusFilter!
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          25.0, 0.0, 25.0, 0.0),
+                                                  child: FlutterFlowChoiceChips(
+                                                    options: [
+                                                      ChipData('Dropped'),
+                                                      ChipData('Washing'),
+                                                      ChipData('Done'),
+                                                      ChipData('Archived')
                                                     ],
+                                                    onChanged: (val) =>
+                                                        safeSetState(() => _model
+                                                                .laundryStatusChipsValue =
+                                                            val?.firstOrNull),
+                                                    selectedChipStyle:
+                                                        ChipStyle(
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .info,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                useGoogleFonts:
+                                                                    !FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMediumIsCustom,
+                                                              ),
+                                                      iconColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryBackground,
+                                                      iconSize: 18.0,
+                                                      elevation: 0.0,
+                                                      borderWidth: 1.0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    unselectedChipStyle:
+                                                        ChipStyle(
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                useGoogleFonts:
+                                                                    !FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodySmallIsCustom,
+                                                              ),
+                                                      iconColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      iconSize: 18.0,
+                                                      elevation: 0.0,
+                                                      borderColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderWidth: 1.0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    chipSpacing: 8.0,
+                                                    rowSpacing: 8.0,
+                                                    multiselect: false,
+                                                    initialized: _model
+                                                            .laundryStatusChipsValue !=
+                                                        null,
+                                                    alignment:
+                                                        WrapAlignment.start,
+                                                    controller: _model
+                                                            .laundryStatusChipsValueController ??=
+                                                        FormFieldController<
+                                                            List<String>>(
+                                                      [
+                                                        _model
+                                                            .laundryStatusFilter!
+                                                      ],
+                                                    ),
+                                                    wrapped: true,
                                                   ),
-                                                  wrapped: true,
                                                 ),
                                               ),
                                             ].divide(SizedBox(height: 8.0)),
@@ -1018,35 +1022,29 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    enableDrag: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          FocusScope.of(context)
-                                                              .unfocus();
-                                                          FocusManager.instance
-                                                              .primaryFocus
-                                                              ?.unfocus();
-                                                        },
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              TransactionCardWidget(
-                                                            transactionParam:
-                                                                tableDataItem,
-                                                          ),
-                                                        ),
-                                                      );
+                                                  context.pushNamed(
+                                                    TransactionItemWidget
+                                                        .routeName,
+                                                    queryParameters: {
+                                                      'transactionID':
+                                                          serializeParam(
+                                                        tableDataItem
+                                                            .transactionId,
+                                                        ParamType.String,
+                                                      ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      '__transition_info__':
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
                                                     },
-                                                  ).then((value) =>
-                                                      safeSetState(() {}));
+                                                  );
                                                 },
                                                 child: Text(
                                                   tableDataItem.transactionId,

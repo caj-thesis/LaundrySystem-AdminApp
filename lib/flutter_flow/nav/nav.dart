@@ -103,6 +103,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'TransactionsPage')
               : TransactionsPageWidget(),
+        ),
+        FFRoute(
+          name: TransactionItemWidget.routeName,
+          path: TransactionItemWidget.routePath,
+          builder: (context, params) => TransactionItemWidget(
+            transactionID: params.getParam(
+              'transactionID',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

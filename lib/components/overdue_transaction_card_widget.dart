@@ -248,7 +248,7 @@ class _OverdueTransactionCardWidgetState
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Flex(
                                 direction: Axis.vertical,
@@ -448,7 +448,7 @@ class _OverdueTransactionCardWidgetState
                                   ),
                                 ].divide(SizedBox(height: 20.0)),
                               ),
-                            ],
+                            ].divide(SizedBox(width: 50.0)),
                           ),
                           FFButtonWidget(
                             onPressed: () async {
@@ -476,11 +476,28 @@ class _OverdueTransactionCardWidgetState
                                         },
                                       ) ??
                                       false;
-
-                              await containerOverdueLogsRecord!.reference
-                                  .update(createOverdueLogsRecordData(
-                                status: 'completed',
-                              ));
+                              if (confirmDialogResponse) {
+                                await containerOverdueLogsRecord!.reference
+                                    .update(createOverdueLogsRecordData(
+                                  status: 'completed',
+                                ));
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Transaction Completed'),
+                                      content: Text('Customer paid manually.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             text: 'Mark as Paid',
                             icon: Icon(
