@@ -157,7 +157,6 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
 
                       return Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -216,8 +215,6 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   child: Container(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.9,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryBackground,
@@ -226,153 +223,149 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10.0, 10.0, 10.0, 10.0),
-                                      child: Column(
+                                      child: Row(
                                         mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          1.0,
-                                                  child: TextFormField(
-                                                    controller:
-                                                        _model.textController,
-                                                    focusNode: _model
-                                                        .textFieldFocusNode,
-                                                    onChanged: (_) =>
-                                                        EasyDebounce.debounce(
-                                                      '_model.textController',
-                                                      Duration(
-                                                          milliseconds: 500),
-                                                      () async {
-                                                        safeSetState(() {
-                                                          _model.simpleSearchResults =
-                                                              TextSearch(
-                                                            mainContainerTransactionsRecordList
-                                                                .map(
-                                                                  (record) => TextSearchItem
+                                          Expanded(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              child: TextFormField(
+                                                controller:
+                                                    _model.textController,
+                                                focusNode:
+                                                    _model.textFieldFocusNode,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.textController',
+                                                  Duration(milliseconds: 500),
+                                                  () async {
+                                                    safeSetState(() {
+                                                      _model.simpleSearchResults =
+                                                          TextSearch(
+                                                        mainContainerTransactionsRecordList
+                                                            .map(
+                                                              (record) =>
+                                                                  TextSearchItem
                                                                       .fromTerms(
                                                                           record,
                                                                           [
-                                                                        record
-                                                                            .transactionId,
-                                                                        record
-                                                                            .pin,
-                                                                        record
-                                                                            .phoneNumber
-                                                                      ]),
-                                                                )
-                                                                .toList(),
-                                                          )
-                                                                  .search(_model
-                                                                      .textController
-                                                                      .text)
-                                                                  .map((r) =>
-                                                                      r.object)
-                                                                  .toList();
-                                                          ;
-                                                        });
-                                                      },
+                                                                    record
+                                                                        .transactionId,
+                                                                    record.pin,
+                                                                    record
+                                                                        .phoneNumber
+                                                                  ]),
+                                                            )
+                                                            .toList(),
+                                                      )
+                                                              .search(_model
+                                                                  .textController
+                                                                  .text)
+                                                              .map((r) =>
+                                                                  r.object)
+                                                              .toList();
+                                                      ;
+                                                    });
+                                                  },
+                                                ),
+                                                autofocus: false,
+                                                enabled: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMediumFamily,
+                                                            letterSpacing: 0.0,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMediumIsCustom,
+                                                          ),
+                                                  hintText:
+                                                      'Search by Transaction ID',
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMediumFamily,
+                                                            letterSpacing: 0.0,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMediumIsCustom,
+                                                          ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
                                                     ),
-                                                    autofocus: false,
-                                                    enabled: true,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      labelStyle:
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumFamily,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                useGoogleFonts:
-                                                                    !FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMediumIsCustom,
-                                                              ),
-                                                      hintText:
-                                                          'Search by Transaction ID',
-                                                      hintStyle:
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumFamily,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                useGoogleFonts:
-                                                                    !FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMediumIsCustom,
-                                                              ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
                                                               .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      filled: true,
-                                                      fillColor: FlutterFlowTheme
-                                                              .of(context)
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
                                                           .secondaryBackground,
-                                                      prefixIcon: Icon(
-                                                        Icons.search,
-                                                      ),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                  prefixIcon: Icon(
+                                                    Icons.search,
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
@@ -385,67 +378,59 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                                       .of(context)
                                                                   .bodyMediumIsCustom,
                                                         ),
-                                                    cursorColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText,
-                                                    enableInteractiveSelection:
-                                                        true,
-                                                    validator: _model
-                                                        .textControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ),
+                                                cursorColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                enableInteractiveSelection:
+                                                    true,
+                                                validator: _model
+                                                    .textControllerValidator
+                                                    .asValidator(context),
                                               ),
-                                              FFButtonWidget(
-                                                onPressed: () async {
-                                                  _model.isFilterCardVisible =
-                                                      !_model
-                                                          .isFilterCardVisible;
-                                                  safeSetState(() {});
-                                                },
-                                                text: 'Filters',
-                                                icon: Icon(
-                                                  Icons.filter_list,
-                                                  size: 15.0,
-                                                ),
-                                                options: FFButtonOptions(
-                                                  height: 40.0,
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          16.0, 0.0, 16.0, 0.0),
-                                                  iconPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 0.0,
-                                                              0.0, 0.0),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  textStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .override(
-                                                            fontFamily:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmallFamily,
-                                                            color: Colors.white,
-                                                            letterSpacing: 0.0,
-                                                            useGoogleFonts:
-                                                                !FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmallIsCustom,
-                                                          ),
-                                                  elevation: 0.0,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                            ].divide(SizedBox(width: 10.0)),
+                                            ),
                                           ),
-                                        ].divide(SizedBox(height: 10.0)),
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              _model.isFilterCardVisible =
+                                                  !_model.isFilterCardVisible;
+                                              safeSetState(() {});
+                                            },
+                                            text: 'Filters',
+                                            icon: Icon(
+                                              Icons.filter_list,
+                                              size: 15.0,
+                                            ),
+                                            options: FFButtonOptions(
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmallFamily,
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
+                                                        useGoogleFonts:
+                                                            !FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleSmallIsCustom,
+                                                      ),
+                                              elevation: 0.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                        ].divide(SizedBox(width: 10.0)),
                                       ),
                                     ),
                                   ),
@@ -947,7 +932,6 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,

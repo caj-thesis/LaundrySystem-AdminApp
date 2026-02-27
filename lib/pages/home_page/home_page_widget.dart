@@ -95,8 +95,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
@@ -1407,10 +1405,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               );
                             },
                           ),
-                        ],
+                        ].divide(SizedBox(height: 10.0)),
                       ),
                     ),
-                  ].divide(SizedBox(height: 5.0)),
+                  ],
                 ),
               ),
             ),

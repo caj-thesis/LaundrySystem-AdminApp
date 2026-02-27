@@ -32,22 +32,16 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     super.initState();
     _model = createModel(context, () => SettingsPageModel());
 
-    _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode4 ??= FocusNode();
 
-    _model.textController5 ??= TextEditingController(text: '25');
     _model.textFieldFocusNode5 ??= FocusNode();
 
-    _model.textController6 ??= TextEditingController();
     _model.textFieldFocusNode6 ??= FocusNode();
   }
 
@@ -144,7 +138,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
 
                       return Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 1.1,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -615,7 +609,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                       width: 200.0,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController1,
+                                                                .textController1 ??=
+                                                            TextEditingController(
+                                                          text: containerSettingsRecord
+                                                              ?.laundryShopName,
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode1,
                                                         autofocus: false,
@@ -780,7 +778,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                       width: 200.0,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController2,
+                                                                .textController2 ??=
+                                                            TextEditingController(
+                                                          text: containerSettingsRecord
+                                                              ?.receiptFootnote,
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode2,
                                                         autofocus: false,
@@ -940,7 +942,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                     controller: _model
                                                             .dropDownValueController ??=
                                                         FormFieldController<
-                                                            int>(null),
+                                                            int>(
+                                                      _model.dropDownValue ??=
+                                                          containerSettingsRecord
+                                                              ?.overdueHours,
+                                                    ),
                                                     options: List<int>.from([
                                                       24,
                                                       48,
@@ -1144,7 +1150,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                       width: 200.0,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController3,
+                                                                .textController3 ??=
+                                                            TextEditingController(
+                                                          text: containerSettingsRecord
+                                                              ?.minClothesPrice
+                                                              .toString(),
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode3,
                                                         autofocus: false,
@@ -1308,7 +1319,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                       width: 30.0,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController4,
+                                                                .textController4 ??=
+                                                            TextEditingController(
+                                                          text: containerSettingsRecord
+                                                              ?.minClothesPrice
+                                                              .toString(),
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode4,
                                                         autofocus: false,
@@ -1472,7 +1488,13 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                       width: 200.0,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController5,
+                                                                .textController5 ??=
+                                                            TextEditingController(
+                                                          text:
+                                                              containerSettingsRecord
+                                                                  ?.clothesPrice
+                                                                  .toString(),
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode5,
                                                         autofocus: false,
@@ -1639,7 +1661,13 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                           0.3,
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .textController6,
+                                                                .textController6 ??=
+                                                            TextEditingController(
+                                                          text:
+                                                              containerSettingsRecord
+                                                                  ?.bedSheetPrice
+                                                                  .toString(),
+                                                        ),
                                                         focusNode: _model
                                                             .textFieldFocusNode6,
                                                         autofocus: false,
