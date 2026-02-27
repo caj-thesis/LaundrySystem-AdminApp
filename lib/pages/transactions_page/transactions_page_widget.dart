@@ -73,7 +73,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondary,
           automaticallyImplyLeading: false,
@@ -114,39 +114,57 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
           top: true,
           child: Align(
             alignment: AlignmentDirectional(0.0, -1.0),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(18.0, 18.0, 18.0, 0.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    StreamBuilder<List<TransactionsRecord>>(
-                      stream: queryTransactionsRecord(
-                        queryBuilder: (transactionsRecord) =>
-                            transactionsRecord.orderBy('droppedAt'),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  StreamBuilder<List<TransactionsRecord>>(
+                    stream: queryTransactionsRecord(
+                      queryBuilder: (transactionsRecord) => transactionsRecord
+                          .where(Filter.or(
+                            Filter(
+                              'type',
+                              isEqualTo: _model.laundryTypeChipsValue,
+                            ),
+                            Filter(
+                              'laundryStatus',
+                              isEqualTo: _model.laundryStatusChipsValue,
+                            ),
+                            Filter(
+                              'status',
+                              isEqualTo: _model.paymentStatusChipsValue,
+                            ),
+                          ))
+                          .orderBy('droppedAt'),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
                               ),
                             ),
-                          );
-                        }
-                        List<TransactionsRecord>
-                            containerTransactionsRecordList = snapshot.data!;
+                          ),
+                        );
+                      }
+                      List<TransactionsRecord> containerTransactionsRecordList =
+                          snapshot.data!;
 
-                        return Container(
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: MediaQuery.sizeOf(context).height * 1.0,
-                          decoration: BoxDecoration(),
+                      return Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 1.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              18.0, 18.0, 18.0, 18.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -440,7 +458,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                          .primaryBackground,
                                       borderRadius: BorderRadius.circular(12.0),
                                       border: Border.all(
                                         color: FlutterFlowTheme.of(context)
@@ -456,21 +474,33 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Filter Options',
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .headlineSmallFamily,
-                                                  letterSpacing: 0.0,
-                                                  useGoogleFonts:
-                                                      !FlutterFlowTheme.of(
-                                                              context)
-                                                          .headlineSmallIsCustom,
-                                                ),
+                                          Stack(
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Filter Options',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .headlineSmallFamily,
+                                                          letterSpacing: 0.0,
+                                                          useGoogleFonts:
+                                                              !FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .headlineSmallIsCustom,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                           Column(
                                             mainAxisSize: MainAxisSize.min,
@@ -876,141 +906,178 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                   ).animateOnPageLoad(animationsMap[
                                       'containerOnPageLoadAnimation']!),
                                 ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: Builder(
-                                    builder: (context) {
-                                      final tableList =
-                                          containerTransactionsRecordList
-                                              .toList();
+                              Material(
+                                color: Colors.transparent,
+                                elevation: 1.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Container(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 0.0),
+                                    child: Builder(
+                                      builder: (context) {
+                                        final tableList = (_model
+                                                    .simpleSearchResults
+                                                    .isNotEmpty
+                                                ? _model.simpleSearchResults
+                                                : containerTransactionsRecordList)
+                                            .toList();
 
-                                      return FlutterFlowDataTable<
-                                          TransactionsRecord>(
-                                        controller:
-                                            _model.paginatedDataTableController,
-                                        data: tableList,
-                                        columnsBuilder: (onSortChanged) => [
-                                          DataColumn2(
-                                            label: DefaultTextStyle.merge(
-                                              softWrap: true,
-                                              child: Text(
-                                                'Transaction ID',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelLargeFamily,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelLargeIsCustom,
-                                                        ),
+                                        return FlutterFlowDataTable<
+                                            TransactionsRecord>(
+                                          controller: _model
+                                              .paginatedDataTableController,
+                                          data: tableList,
+                                          columnsBuilder: (onSortChanged) => [
+                                            DataColumn2(
+                                              label: DefaultTextStyle.merge(
+                                                softWrap: true,
+                                                child: Text(
+                                                  'Transaction ID',
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeFamily,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeIsCustom,
+                                                          ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          DataColumn2(
-                                            label: DefaultTextStyle.merge(
-                                              softWrap: true,
-                                              child: Text(
-                                                'Laundry Status',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelLargeFamily,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelLargeIsCustom,
-                                                        ),
+                                            DataColumn2(
+                                              label: DefaultTextStyle.merge(
+                                                softWrap: true,
+                                                child: Text(
+                                                  'Laundry Status',
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeFamily,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeIsCustom,
+                                                          ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          DataColumn2(
-                                            label: DefaultTextStyle.merge(
-                                              softWrap: true,
-                                              child: Text(
-                                                'Status',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelLargeFamily,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelLargeIsCustom,
-                                                        ),
+                                            DataColumn2(
+                                              label: DefaultTextStyle.merge(
+                                                softWrap: true,
+                                                child: Text(
+                                                  'Status',
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeFamily,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLargeIsCustom,
+                                                          ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                        dataRowBuilder: (tableListItem,
-                                                tableListIndex,
-                                                selected,
-                                                onSelectChanged) =>
-                                            DataRow(
-                                          color: WidgetStateProperty.all(
-                                            tableListIndex % 2 == 0
-                                                ? FlutterFlowTheme.of(context)
-                                                    .primaryBackground
-                                                : FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
-                                          ),
-                                          cells: [
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                  TransactionItemWidget
-                                                      .routeName,
-                                                  queryParameters: {
-                                                    'transactionID':
-                                                        serializeParam(
-                                                      tableListItem
-                                                          .transactionId,
-                                                      ParamType.String,
-                                                    ),
-                                                  }.withoutNulls,
-                                                  extra: <String, dynamic>{
-                                                    '__transition_info__':
-                                                        TransitionInfo(
-                                                      hasTransition: true,
-                                                      transitionType:
-                                                          PageTransitionType
-                                                              .fade,
-                                                      duration: Duration(
-                                                          milliseconds: 0),
-                                                    ),
-                                                  },
-                                                );
-                                              },
-                                              child: Text(
-                                                tableListItem.transactionId,
+                                          ],
+                                          dataRowBuilder: (tableListItem,
+                                                  tableListIndex,
+                                                  selected,
+                                                  onSelectChanged) =>
+                                              DataRow(
+                                            color: WidgetStateProperty.all(
+                                              tableListIndex % 2 == 0
+                                                  ? FlutterFlowTheme.of(context)
+                                                      .primaryBackground
+                                                  : FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                            ),
+                                            cells: [
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  context.pushNamed(
+                                                    TransactionItemWidget
+                                                        .routeName,
+                                                    queryParameters: {
+                                                      'transactionID':
+                                                          serializeParam(
+                                                        tableListItem
+                                                            .transactionId,
+                                                        ParamType.String,
+                                                      ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      '__transition_info__':
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
+                                                  );
+                                                },
+                                                child: Text(
+                                                  tableListItem.transactionId,
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                            letterSpacing: 0.0,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumIsCustom,
+                                                          ),
+                                                ),
+                                              ),
+                                              Text(
+                                                tableListItem.laundryStatus,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1026,78 +1093,61 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                                   .bodyMediumIsCustom,
                                                         ),
                                               ),
-                                            ),
-                                            Text(
-                                              tableListItem.laundryStatus,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMediumFamily,
-                                                        letterSpacing: 0.0,
-                                                        useGoogleFonts:
-                                                            !FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMediumIsCustom,
-                                                      ),
-                                            ),
-                                            Text(
-                                              tableListItem.status,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMediumFamily,
-                                                        letterSpacing: 0.0,
-                                                        useGoogleFonts:
-                                                            !FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMediumIsCustom,
-                                                      ),
-                                            ),
-                                          ].map((c) => DataCell(c)).toList(),
-                                        ),
-                                        paginated: true,
-                                        selectable: false,
-                                        hidePaginator: false,
-                                        showFirstLastButtons: false,
-                                        minWidth:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        headingRowHeight: 56.0,
-                                        dataRowHeight: 48.0,
-                                        columnSpacing: 20.0,
-                                        headingRowColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        addHorizontalDivider: true,
-                                        addTopAndBottomDivider: false,
-                                        hideDefaultHorizontalDivider: true,
-                                        horizontalDividerColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        horizontalDividerThickness: 1.0,
-                                        addVerticalDivider: false,
-                                      );
-                                    },
+                                              Text(
+                                                tableListItem.status,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily,
+                                                          letterSpacing: 0.0,
+                                                          useGoogleFonts:
+                                                              !FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMediumIsCustom,
+                                                        ),
+                                              ),
+                                            ].map((c) => DataCell(c)).toList(),
+                                          ),
+                                          paginated: true,
+                                          selectable: false,
+                                          hidePaginator: false,
+                                          showFirstLastButtons: false,
+                                          minWidth:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          headingRowHeight: 56.0,
+                                          dataRowHeight: 48.0,
+                                          columnSpacing: 20.0,
+                                          headingRowColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          addHorizontalDivider: true,
+                                          addTopAndBottomDivider: false,
+                                          hideDefaultHorizontalDivider: true,
+                                          horizontalDividerColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          horizontalDividerThickness: 1.0,
+                                          addVerticalDivider: false,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
                             ].divide(SizedBox(height: 5.0)),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),

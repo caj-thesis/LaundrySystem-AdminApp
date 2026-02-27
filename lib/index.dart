@@ -5,3 +5,5 @@ export '/pages/transactions_page/transactions_page_widget.dart'
     show TransactionsPageWidget;
 export '/pages/transaction_item/transaction_item_widget.dart'
     show TransactionItemWidget;
+export '/pages/sales_page/sales_page_widget.dart' show SalesPageWidget;
+export '/pages/settings_page/settings_page_widget.dart' show SettingsPageWidget;

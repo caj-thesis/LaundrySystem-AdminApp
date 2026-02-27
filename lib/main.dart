@@ -141,6 +141,8 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'HomePage': HomePageWidget(),
       'TransactionsPage': TransactionsPageWidget(),
+      'SalesPage': SalesPageWidget(),
+      'SettingsPage': SettingsPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -211,6 +213,54 @@ class _NavBarPageState extends State<NavBarPage> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
+                        ? FlutterFlowTheme.of(context).primary
+                        : FlutterFlowTheme.of(context).alternate,
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.line_axis,
+                  color: currentIndex == 2
+                      ? FlutterFlowTheme.of(context).primary
+                      : FlutterFlowTheme.of(context).alternate,
+                  size: 24.0,
+                ),
+                Text(
+                  'Sales',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 2
+                        ? FlutterFlowTheme.of(context).primary
+                        : FlutterFlowTheme.of(context).alternate,
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.settings,
+                  color: currentIndex == 3
+                      ? FlutterFlowTheme.of(context).primary
+                      : FlutterFlowTheme.of(context).alternate,
+                  size: 24.0,
+                ),
+                Text(
+                  'Settings',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 3
                         ? FlutterFlowTheme.of(context).primary
                         : FlutterFlowTheme.of(context).alternate,
                     fontSize: 11.0,
