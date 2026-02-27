@@ -152,8 +152,8 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                           ),
                         );
                       }
-                      List<TransactionsRecord> containerTransactionsRecordList =
-                          snapshot.data!;
+                      List<TransactionsRecord>
+                          mainContainerTransactionsRecordList = snapshot.data!;
 
                       return Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
@@ -254,7 +254,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                         safeSetState(() {
                                                           _model.simpleSearchResults =
                                                               TextSearch(
-                                                            containerTransactionsRecordList
+                                                            mainContainerTransactionsRecordList
                                                                 .map(
                                                                   (record) => TextSearchItem
                                                                       .fromTerms(
@@ -499,6 +499,40 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                         ),
                                                   ),
                                                 ],
+                                              ),
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    1.0, 1.55),
+                                                child: InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    safeSetState(() {
+                                                      _model
+                                                          .laundryTypeChipsValueController
+                                                          ?.reset();
+                                                      _model
+                                                          .laundryStatusChipsValueController
+                                                          ?.reset();
+                                                      _model
+                                                          .paymentStatusChipsValueController
+                                                          ?.reset();
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.restart_alt,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -924,18 +958,18 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                         0.0, 10.0, 0.0, 0.0),
                                     child: Builder(
                                       builder: (context) {
-                                        final tableList = (_model
+                                        final tableData = (_model
                                                     .simpleSearchResults
                                                     .isNotEmpty
                                                 ? _model.simpleSearchResults
-                                                : containerTransactionsRecordList)
+                                                : mainContainerTransactionsRecordList)
                                             .toList();
 
                                         return FlutterFlowDataTable<
                                             TransactionsRecord>(
-                                          controller: _model
-                                              .paginatedDataTableController,
-                                          data: tableList,
+                                          controller:
+                                              _model.transactionTableController,
+                                          data: tableData,
                                           columnsBuilder: (onSortChanged) => [
                                             DataColumn2(
                                               label: DefaultTextStyle.merge(
@@ -1013,13 +1047,13 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                               ),
                                             ),
                                           ],
-                                          dataRowBuilder: (tableListItem,
-                                                  tableListIndex,
+                                          dataRowBuilder: (tableDataItem,
+                                                  tableDataIndex,
                                                   selected,
                                                   onSelectChanged) =>
                                               DataRow(
                                             color: WidgetStateProperty.all(
-                                              tableListIndex % 2 == 0
+                                              tableDataIndex % 2 == 0
                                                   ? FlutterFlowTheme.of(context)
                                                       .primaryBackground
                                                   : FlutterFlowTheme.of(context)
@@ -1039,7 +1073,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                     queryParameters: {
                                                       'transactionID':
                                                           serializeParam(
-                                                        tableListItem
+                                                        tableDataItem
                                                             .transactionId,
                                                         ParamType.String,
                                                       ),
@@ -1058,7 +1092,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                   );
                                                 },
                                                 child: Text(
-                                                  tableListItem.transactionId,
+                                                  tableDataItem.transactionId,
                                                   style:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -1077,7 +1111,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                 ),
                                               ),
                                               Text(
-                                                tableListItem.laundryStatus,
+                                                tableDataItem.laundryStatus,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1094,7 +1128,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget>
                                                         ),
                                               ),
                                               Text(
-                                                tableListItem.status,
+                                                tableDataItem.status,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

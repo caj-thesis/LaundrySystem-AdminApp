@@ -36,8 +36,8 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
       paymentStatusChipsValueController?.value?.firstOrNull;
   set paymentStatusChipsValue(String? val) =>
       paymentStatusChipsValueController?.value = val != null ? [val] : [];
-  // State field(s) for PaginatedDataTable widget.
-  final paginatedDataTableController =
+  // State field(s) for TransactionTable widget.
+  final transactionTableController =
       FlutterFlowDataTableController<TransactionsRecord>();
 
   @override
@@ -48,6 +48,6 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
 
-    paginatedDataTableController.dispose();
+    transactionTableController.dispose();
   }
 }
