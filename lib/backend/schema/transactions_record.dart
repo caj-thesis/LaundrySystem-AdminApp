@@ -95,10 +95,10 @@ class TransactionsRecord extends FirestoreRecord {
   DateTime? get archivedAt => _archivedAt;
   bool hasArchivedAt() => _archivedAt != null;
 
-  // "timestamp" field.
-  String? _timestamp;
-  String get timestamp => _timestamp ?? '';
-  bool hasTimestamp() => _timestamp != null;
+  // "droppedAt" field.
+  DateTime? _droppedAt;
+  DateTime? get droppedAt => _droppedAt;
+  bool hasDroppedAt() => _droppedAt != null;
 
   void _initializeFields() {
     _lockerId = castToType<int>(snapshotData['lockerId']);
@@ -117,7 +117,7 @@ class TransactionsRecord extends FirestoreRecord {
     _reminderSentAt = snapshotData['reminderSentAt'] as DateTime?;
     _doneAt = snapshotData['doneAt'] as DateTime?;
     _archivedAt = snapshotData['archivedAt'] as DateTime?;
-    _timestamp = snapshotData['timestamp'] as String?;
+    _droppedAt = snapshotData['droppedAt'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -171,7 +171,7 @@ Map<String, dynamic> createTransactionsRecordData({
   DateTime? reminderSentAt,
   DateTime? doneAt,
   DateTime? archivedAt,
-  String? timestamp,
+  DateTime? droppedAt,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -191,7 +191,7 @@ Map<String, dynamic> createTransactionsRecordData({
       'reminderSentAt': reminderSentAt,
       'doneAt': doneAt,
       'archivedAt': archivedAt,
-      'timestamp': timestamp,
+      'droppedAt': droppedAt,
     }.withoutNulls,
   );
 
@@ -220,7 +220,7 @@ class TransactionsRecordDocumentEquality
         e1?.reminderSentAt == e2?.reminderSentAt &&
         e1?.doneAt == e2?.doneAt &&
         e1?.archivedAt == e2?.archivedAt &&
-        e1?.timestamp == e2?.timestamp;
+        e1?.droppedAt == e2?.droppedAt;
   }
 
   @override
@@ -241,7 +241,7 @@ class TransactionsRecordDocumentEquality
         e?.reminderSentAt,
         e?.doneAt,
         e?.archivedAt,
-        e?.timestamp
+        e?.droppedAt
       ]);
 
   @override

@@ -518,11 +518,8 @@ class _TransactionItemWidgetState extends State<TransactionItemWidget> {
                                             MainAxisAlignment.start,
                                         children: [
                                           if (containerTransactionsRecord
-                                                      ?.timestamp !=
-                                                  null &&
-                                              containerTransactionsRecord
-                                                      ?.timestamp !=
-                                                  '')
+                                                  ?.droppedAt !=
+                                              null)
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -556,8 +553,10 @@ class _TransactionItemWidgetState extends State<TransactionItemWidget> {
                                                 ),
                                                 Text(
                                                   valueOrDefault<String>(
-                                                    containerTransactionsRecord
-                                                        ?.timestamp,
+                                                    dateTimeFormat(
+                                                        "MMMM d, yyyy \'at\' h:mm:ss a",
+                                                        containerTransactionsRecord
+                                                            ?.droppedAt),
                                                     'February 24, 2026 at 6:56:02 PM',
                                                   ),
                                                   style:

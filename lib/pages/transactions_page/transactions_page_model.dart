@@ -9,12 +9,6 @@ import 'package:flutter/material.dart';
 class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
   ///  Local state fields for this page.
 
-  String? laundryTypeFilter;
-
-  String? laundryStatusFilter;
-
-  String? paymentStatusFilter;
-
   bool isFilterCardVisible = false;
 
   ///  State fields for stateful widgets in this page.

@@ -479,7 +479,7 @@ class _OverdueTransactionCardWidgetState
                               if (confirmDialogResponse) {
                                 await containerOverdueLogsRecord!.reference
                                     .update(createOverdueLogsRecordData(
-                                  status: 'completed',
+                                  status: 'Completed',
                                 ));
                                 await showDialog(
                                   context: context,
