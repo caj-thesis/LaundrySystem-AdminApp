@@ -59,7 +59,7 @@ class _TransactionItemWidgetState extends State<TransactionItemWidget> {
             buttonSize: 50.0,
             icon: Icon(
               Icons.chevron_left_rounded,
-              color: FlutterFlowTheme.of(context).primary,
+              color: FlutterFlowTheme.of(context).accent4,
               size: 30.0,
             ),
             onPressed: () async {
@@ -70,9 +70,10 @@ class _TransactionItemWidgetState extends State<TransactionItemWidget> {
             'Transaction Detail',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                  color: Colors.black,
+                  color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
+                  fontWeight: FontWeight.bold,
                   useGoogleFonts:
                       !FlutterFlowTheme.of(context).headlineMediumIsCustom,
                 ),

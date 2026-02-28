@@ -1,6 +1,5 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -50,31 +49,14 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondary,
           automaticallyImplyLeading: false,
-          leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 10.0,
-              borderWidth: 1.0,
-              buttonSize: 50.0,
-              fillColor: FlutterFlowTheme.of(context).iconBackground,
-              icon: Icon(
-                Icons.local_laundry_service,
-                color: FlutterFlowTheme.of(context).primary,
-                size: 20.0,
-              ),
-              onPressed: () async {
-                context.pop();
-              },
-            ),
-          ),
           title: Text(
             'Laundry Management',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                  color: Colors.black,
+                  color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
+                  fontWeight: FontWeight.bold,
                   useGoogleFonts:
                       !FlutterFlowTheme.of(context).headlineMediumIsCustom,
                 ),

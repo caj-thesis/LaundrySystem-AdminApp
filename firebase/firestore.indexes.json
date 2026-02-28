@@ -1,20 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "lockers",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "isConnected",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "lockerId",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "transactions",
       "queryScope": "COLLECTION",
       "fields": [

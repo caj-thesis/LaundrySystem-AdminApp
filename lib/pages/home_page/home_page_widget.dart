@@ -1,7 +1,6 @@
 import '/backend/backend.dart';
 import '/components/laundry_card_widget.dart';
 import '/components/overdue_transaction_card_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -49,24 +48,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondary,
           automaticallyImplyLeading: false,
-          leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 10.0,
-              borderWidth: 1.0,
-              buttonSize: 50.0,
-              fillColor: FlutterFlowTheme.of(context).iconBackground,
-              icon: Icon(
-                Icons.local_laundry_service,
-                color: FlutterFlowTheme.of(context).primary,
-                size: 20.0,
-              ),
-              onPressed: () async {
-                context.pop();
-              },
-            ),
-          ),
           title: Text(
             'Laundry Management',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -233,12 +214,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   2.0, 0.0, 0.0, 0.0),
                               child: StreamBuilder<List<LockersRecord>>(
                                 stream: queryLockersRecord(
-                                  queryBuilder: (lockersRecord) => lockersRecord
-                                      .where(
-                                        'isConnected',
-                                        isEqualTo: true,
-                                      )
-                                      .orderBy('lockerId'),
+                                  queryBuilder: (lockersRecord) =>
+                                      lockersRecord.where(
+                                    'isConnected',
+                                    isEqualTo: true,
+                                  ),
                                 ),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
