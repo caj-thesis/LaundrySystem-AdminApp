@@ -9,12 +9,10 @@ export 'laundry_card_model.dart';
 class LaundryCardWidget extends StatefulWidget {
   const LaundryCardWidget({
     super.key,
-    this.targetTransactionId,
-    required this.lockerRef,
+    required this.targetLocker,
   });
 
-  final String? targetTransactionId;
-  final DocumentReference? lockerRef;
+  final String? targetLocker;
 
   @override
   State<LaundryCardWidget> createState() => _LaundryCardWidgetState();
@@ -47,8 +45,8 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
     return StreamBuilder<List<LockersRecord>>(
       stream: queryLockersRecord(
         queryBuilder: (lockersRecord) => lockersRecord.where(
-          'currentTransactionId',
-          isEqualTo: widget.targetTransactionId,
+          'lockerId',
+          isEqualTo: widget.targetLocker,
         ),
         singleRecord: true,
       ),
@@ -78,10 +76,14 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
 
         return Container(
           width: MediaQuery.sizeOf(context).width * 1.0,
-          height: MediaQuery.sizeOf(context).height * 0.78,
+          height: MediaQuery.sizeOf(context).height * 0.75,
           decoration: BoxDecoration(),
           child: StreamBuilder<List<TransactionsRecord>>(
             stream: queryTransactionsRecord(
+              queryBuilder: (transactionsRecord) => transactionsRecord.where(
+                'transactionId',
+                isEqualTo: containerLockersRecord?.currentTransactionId,
+              ),
               singleRecord: true,
             ),
             builder: (context, snapshot) {
@@ -112,7 +114,6 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
 
               return Container(
                 width: MediaQuery.sizeOf(context).width * 1.0,
-                height: MediaQuery.sizeOf(context).height * 1.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
                   borderRadius: BorderRadius.only(
@@ -239,7 +240,7 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                                         .bodyMediumFamily,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .accent1,
+                                                        .primary,
                                                 letterSpacing: 0.0,
                                                 useGoogleFonts:
                                                     !FlutterFlowTheme.of(
@@ -337,9 +338,8 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                             ),
                             TextSpan(
                               text: valueOrDefault<String>(
-                                containerTransactionsRecord?.lockerId
-                                    .toString(),
-                                '1',
+                                widget.targetLocker,
+                                '0',
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
@@ -740,6 +740,95 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                               ),
                             ),
                           if (containerTransactionsRecord?.laundryStatus ==
+                              'Done')
+                            FFButtonWidget(
+                              onPressed: () async {
+                                if (containerTransactionsRecord!.reminderSent) {
+                                  var confirmDialogResponse =
+                                      await showDialog<bool>(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Laundry Overdue'),
+                                                content: Text(
+                                                    'The laundry is overdue. Make sure to remove the laundry from the locker before confirmation.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('Confirm'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ) ??
+                                          false;
+                                  if (confirmDialogResponse) {
+                                    await containerLockersRecord!.reference
+                                        .update(createLockersRecordData(
+                                      adminCommand: 'RESET_OVERDUE',
+                                    ));
+                                  }
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title:
+                                            Text('Overdue Limit not Reached'),
+                                        content: Text(
+                                            'This laundry is not yet ready for archive. '),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              text: 'Overdue',
+                              icon: Icon(
+                                Icons.warning_amber,
+                                size: 15.0,
+                              ),
+                              options: FFButtonOptions(
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconAlignment: IconAlignment.end,
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).warning,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                      useGoogleFonts:
+                                          !FlutterFlowTheme.of(context)
+                                              .titleSmallIsCustom,
+                                    ),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          if (containerTransactionsRecord?.laundryStatus ==
                               'Washing')
                             FFButtonWidget(
                               onPressed: () async {
@@ -807,108 +896,14 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                          if ((containerTransactionsRecord?.laundryStatus ==
-                                  'Done') &&
-                              containerTransactionsRecord!.reminderSent)
-                            FFButtonWidget(
-                              onPressed: () async {
-                                if (containerTransactionsRecord.reminderSent) {
-                                  var confirmDialogResponse =
-                                      await showDialog<bool>(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text('Laundry Overdue'),
-                                                content: Text(
-                                                    'The laundry is overdue. Make sure to remove the laundry from the locker before confirmation.'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext,
-                                                            false),
-                                                    child: Text('Cancel'),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext,
-                                                            true),
-                                                    child: Text('Confirm'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ) ??
-                                          false;
-                                  if (confirmDialogResponse) {
-                                    await containerTransactionsRecord.reference
-                                        .update(createTransactionsRecordData(
-                                      laundryStatus: 'Done',
-                                    ));
-                                  }
-                                } else {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title:
-                                            Text('Overdue Limit not Reached'),
-                                        content: Text(
-                                            'This laundry is not yet ready for archive. '),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              text: 'Overdue',
-                              icon: Icon(
-                                Icons.warning_amber,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconAlignment: IconAlignment.end,
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).warning,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      useGoogleFonts:
-                                          !FlutterFlowTheme.of(context)
-                                              .titleSmallIsCustom,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
                         ],
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onDoubleTap: () async {
+                          FFButtonWidget(
+                            onPressed: () async {
                               if (containerLockersRecord?.action == 'lock') {
                                 var confirmDialogResponse =
                                     await showDialog<bool>(
@@ -939,7 +934,7 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                         ) ??
                                         false;
                                 if (confirmDialogResponse) {
-                                  await widget.lockerRef!
+                                  await containerLockersRecord!.reference
                                       .update(createLockersRecordData(
                                     action: 'unlock',
                                   ));
@@ -974,47 +969,42 @@ class _LaundryCardWidgetState extends State<LaundryCardWidget> {
                                         ) ??
                                         false;
                                 if (confirmDialogResponse) {
-                                  await widget.lockerRef!
+                                  await containerLockersRecord!.reference
                                       .update(createLockersRecordData(
                                     action: 'lock',
                                   ));
                                 }
                               }
                             },
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: containerLockersRecord?.action == 'lock'
-                                  ? 'Unlock'
-                                  : 'Lock',
-                              icon: Icon(
-                                Icons.lock_outline,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: MediaQuery.sizeOf(context).width * 0.46,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconAlignment: IconAlignment.end,
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      useGoogleFonts:
-                                          !FlutterFlowTheme.of(context)
-                                              .titleSmallIsCustom,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                            text: containerLockersRecord?.action == 'lock'
+                                ? 'Unlock'
+                                : 'Lock',
+                            icon: Icon(
+                              Icons.lock_outline,
+                              size: 15.0,
+                            ),
+                            options: FFButtonOptions(
+                              width: MediaQuery.sizeOf(context).width * 0.46,
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconAlignment: IconAlignment.end,
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .titleSmallFamily,
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                    useGoogleFonts:
+                                        !FlutterFlowTheme.of(context)
+                                            .titleSmallIsCustom,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                           FFButtonWidget(

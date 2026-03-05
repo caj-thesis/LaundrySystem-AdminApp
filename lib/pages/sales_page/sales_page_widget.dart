@@ -1,7 +1,8 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_charts.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -75,11 +76,20 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
                 children: [
                   StreamBuilder<List<TransactionsRecord>>(
                     stream: queryTransactionsRecord(
-                      queryBuilder: (transactionsRecord) =>
-                          transactionsRecord.where(
-                        'status',
-                        isEqualTo: 'Completed',
-                      ),
+                      queryBuilder: (transactionsRecord) => transactionsRecord
+                          .where(
+                            'status',
+                            isEqualTo: 'Completed',
+                          )
+                          .where(
+                            'droppedAt',
+                            isGreaterThanOrEqualTo: functions
+                                .getStartDate(_model.choiceChipsValue!),
+                          )
+                          .where(
+                            'droppedAt',
+                            isLessThanOrEqualTo: getCurrentTimestamp,
+                          ),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
@@ -148,6 +158,83 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
                                             !FlutterFlowTheme.of(context)
                                                 .bodyMediumIsCustom,
                                       ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-1.0, 0.0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: FlutterFlowChoiceChips(
+                                    options: [
+                                      ChipData('Daily'),
+                                      ChipData('Weekly'),
+                                      ChipData('Monthly')
+                                    ],
+                                    onChanged: (val) async {
+                                      safeSetState(() => _model
+                                          .choiceChipsValue = val?.firstOrNull);
+                                      _model.selectedFilter =
+                                          _model.choiceChipsValue!;
+                                      safeSetState(() {});
+                                    },
+                                    selectedChipStyle: ChipStyle(
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .info,
+                                            letterSpacing: 0.0,
+                                            useGoogleFonts:
+                                                !FlutterFlowTheme.of(context)
+                                                    .bodyMediumIsCustom,
+                                          ),
+                                      iconColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      iconSize: 16.0,
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    unselectedChipStyle: ChipStyle(
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            letterSpacing: 0.0,
+                                            useGoogleFonts:
+                                                !FlutterFlowTheme.of(context)
+                                                    .bodyMediumIsCustom,
+                                          ),
+                                      iconColor: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      iconSize: 16.0,
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    chipSpacing: 8.0,
+                                    rowSpacing: 8.0,
+                                    multiselect: false,
+                                    initialized:
+                                        _model.choiceChipsValue != null,
+                                    alignment: WrapAlignment.start,
+                                    controller:
+                                        _model.choiceChipsValueController ??=
+                                            FormFieldController<List<String>>(
+                                      [_model.selectedFilter],
+                                    ),
+                                    wrapped: true,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -282,111 +369,6 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
                                                                       .of(context)
                                                                   .bodyMediumIsCustom,
                                                         ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 10.0),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 1.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.9,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(-1.0, 0.0),
-                                            child: Text(
-                                              'Trends',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMediumFamily,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 20.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    useGoogleFonts:
-                                                        !FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMediumIsCustom,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 10.0, 10.0, 10.0),
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height *
-                                                  0.2,
-                                              child: FlutterFlowLineChart(
-                                                data: [
-                                                  FFLineChartData(
-                                                    xData:
-                                                        containerTransactionsRecordList
-                                                            .map((d) => d.price)
-                                                            .toList(),
-                                                    yData:
-                                                        containerTransactionsRecordList
-                                                            .map((d) =>
-                                                                d.pickedUpAt)
-                                                            .toList(),
-                                                    settings: LineChartBarData(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .success,
-                                                      barWidth: 2.0,
-                                                      isCurved: true,
-                                                    ),
-                                                  )
-                                                ],
-                                                chartStylingInfo:
-                                                    ChartStylingInfo(
-                                                  backgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryBackground,
-                                                  showBorder: false,
-                                                ),
-                                                axisBounds: AxisBounds(),
-                                                xAxisLabelInfo: AxisLabelInfo(
-                                                  reservedSize: 32.0,
-                                                ),
-                                                yAxisLabelInfo: AxisLabelInfo(
-                                                  reservedSize: 40.0,
-                                                ),
                                               ),
                                             ),
                                           ),

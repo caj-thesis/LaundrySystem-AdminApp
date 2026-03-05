@@ -29,3 +29,24 @@ double calculateTotalSales(List<TransactionsRecord>? transactions) {
 
   return total;
 }
+
+DateTime getStartDate(String timeFilter) {
+  DateTime now = DateTime.now();
+
+  if (timeFilter == 'Daily') {
+    // Returns midnight of the current day
+    return DateTime(now.year, now.month, now.day);
+  } else if (timeFilter == 'Weekly') {
+    // Returns midnight of Monday of the current week
+    int currentDay = now.weekday;
+    DateTime firstDayOfWeek = now.subtract(Duration(days: currentDay - 1));
+    return DateTime(
+        firstDayOfWeek.year, firstDayOfWeek.month, firstDayOfWeek.day);
+  } else if (timeFilter == 'Monthly') {
+    // Returns midnight of the 1st day of the current month
+    return DateTime(now.year, now.month, 1);
+  }
+
+  // Default fallback is today
+  return DateTime(now.year, now.month, now.day);
+}

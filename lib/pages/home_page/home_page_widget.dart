@@ -309,108 +309,75 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             .first
                                                         : null;
 
-                                                return Card(
-                                                  clipBehavior: Clip
-                                                      .antiAliasWithSaveLayer,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  elevation: 5.0,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      if (occupiedCardTransactionsRecord
-                                                              ?.laundryStatus ==
-                                                          'Dropped')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      10.0,
-                                                                      12.0,
-                                                                      10.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            onTap: () async {
-                                                              if (gridViewLockersRecord
-                                                                          .currentTransactionId !=
-                                                                      '') {
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            LaundryCardWidget(
-                                                                          lockerRef:
-                                                                              gridViewLockersRecord.reference,
-                                                                          targetTransactionId:
-                                                                              gridViewLockersRecord.currentTransactionId,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then((value) =>
-                                                                    safeSetState(
-                                                                        () {}));
-                                                              } else {
-                                                                ScaffoldMessenger.of(
-                                                                        context)
-                                                                    .showSnackBar(
-                                                                  SnackBar(
-                                                                    content:
-                                                                        Text(
-                                                                      'Locker is currently empty',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                      ),
-                                                                    ),
-                                                                    duration: Duration(
-                                                                        milliseconds:
-                                                                            4000),
-                                                                    backgroundColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .secondary,
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
+                                                return InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child:
+                                                                LaundryCardWidget(
+                                                              targetLocker:
+                                                                  gridViewLockersRecord
+                                                                      .lockerId,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) =>
+                                                        safeSetState(() {}));
+                                                  },
+                                                  child: Card(
+                                                    clipBehavior: Clip
+                                                        .antiAliasWithSaveLayer,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    elevation: 5.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        if (occupiedCardTransactionsRecord
+                                                                ?.laundryStatus ==
+                                                            'Dropped')
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -446,7 +413,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           ),
                                                                           TextSpan(
                                                                             text:
-                                                                                gridViewLockersRecord.lockerId.toString(),
+                                                                                gridViewLockersRecord.lockerId,
                                                                             style:
                                                                                 TextStyle(
                                                                               fontWeight: FontWeight.bold,
@@ -508,95 +475,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      if (occupiedCardTransactionsRecord
-                                                              ?.laundryStatus ==
-                                                          'Washing')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      10.0,
-                                                                      12.0,
-                                                                      10.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            onTap: () async {
-                                                              if (gridViewLockersRecord
-                                                                          .currentTransactionId !=
-                                                                      '') {
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            LaundryCardWidget(
-                                                                          lockerRef:
-                                                                              gridViewLockersRecord.reference,
-                                                                          targetTransactionId:
-                                                                              gridViewLockersRecord.currentTransactionId,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then((value) =>
-                                                                    safeSetState(
-                                                                        () {}));
-                                                              } else {
-                                                                ScaffoldMessenger.of(
-                                                                        context)
-                                                                    .showSnackBar(
-                                                                  SnackBar(
-                                                                    content:
-                                                                        Text(
-                                                                      'Locker is currently empty',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                      ),
-                                                                    ),
-                                                                    duration: Duration(
-                                                                        milliseconds:
-                                                                            4000),
-                                                                    backgroundColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .secondary,
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
+                                                        if (occupiedCardTransactionsRecord
+                                                                ?.laundryStatus ==
+                                                            'Washing')
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -632,7 +521,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           ),
                                                                           TextSpan(
                                                                             text:
-                                                                                gridViewLockersRecord.lockerId.toString(),
+                                                                                gridViewLockersRecord.lockerId,
                                                                             style:
                                                                                 TextStyle(
                                                                               fontWeight: FontWeight.bold,
@@ -694,95 +583,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      if (occupiedCardTransactionsRecord
-                                                              ?.laundryStatus ==
-                                                          'Done')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      10.0,
-                                                                      12.0,
-                                                                      10.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            onTap: () async {
-                                                              if (gridViewLockersRecord
-                                                                          .currentTransactionId !=
-                                                                      '') {
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            LaundryCardWidget(
-                                                                          lockerRef:
-                                                                              gridViewLockersRecord.reference,
-                                                                          targetTransactionId:
-                                                                              gridViewLockersRecord.currentTransactionId,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then((value) =>
-                                                                    safeSetState(
-                                                                        () {}));
-                                                              } else {
-                                                                ScaffoldMessenger.of(
-                                                                        context)
-                                                                    .showSnackBar(
-                                                                  SnackBar(
-                                                                    content:
-                                                                        Text(
-                                                                      'Locker is currently empty',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                      ),
-                                                                    ),
-                                                                    duration: Duration(
-                                                                        milliseconds:
-                                                                            4000),
-                                                                    backgroundColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .secondary,
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
+                                                        if ((occupiedCardTransactionsRecord
+                                                                    ?.laundryStatus ==
+                                                                'Done') &&
+                                                            !occupiedCardTransactionsRecord!
+                                                                .reminderSent)
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -818,7 +631,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           ),
                                                                           TextSpan(
                                                                             text:
-                                                                                gridViewLockersRecord.lockerId.toString(),
+                                                                                gridViewLockersRecord.lockerId,
                                                                             style:
                                                                                 TextStyle(
                                                                               fontWeight: FontWeight.bold,
@@ -880,97 +693,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      if ((occupiedCardTransactionsRecord
-                                                                  ?.laundryStatus ==
-                                                              'Done') &&
-                                                          occupiedCardTransactionsRecord!
-                                                              .reminderSent)
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      10.0,
-                                                                      12.0,
-                                                                      10.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            onTap: () async {
-                                                              if (gridViewLockersRecord
-                                                                          .currentTransactionId !=
-                                                                      '') {
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(context)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            LaundryCardWidget(
-                                                                          lockerRef:
-                                                                              gridViewLockersRecord.reference,
-                                                                          targetTransactionId:
-                                                                              gridViewLockersRecord.currentTransactionId,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then((value) =>
-                                                                    safeSetState(
-                                                                        () {}));
-                                                              } else {
-                                                                ScaffoldMessenger.of(
-                                                                        context)
-                                                                    .showSnackBar(
-                                                                  SnackBar(
-                                                                    content:
-                                                                        Text(
-                                                                      'Locker is currently empty',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                      ),
-                                                                    ),
-                                                                    duration: Duration(
-                                                                        milliseconds:
-                                                                            4000),
-                                                                    backgroundColor:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .secondary,
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
+                                                        if ((occupiedCardTransactionsRecord
+                                                                    ?.laundryStatus ==
+                                                                'Done') &&
+                                                            occupiedCardTransactionsRecord!
+                                                                .reminderSent)
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        10.0,
+                                                                        12.0,
+                                                                        10.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1006,7 +741,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           ),
                                                                           TextSpan(
                                                                             text:
-                                                                                gridViewLockersRecord.lockerId.toString(),
+                                                                                gridViewLockersRecord.lockerId,
                                                                             style:
                                                                                 TextStyle(
                                                                               fontWeight: FontWeight.bold,
@@ -1068,8 +803,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 );
                                               },
@@ -1136,8 +871,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ),
                                                               TextSpan(
                                                                 text: gridViewLockersRecord
-                                                                    .lockerId
-                                                                    .toString(),
+                                                                    .lockerId,
                                                                 style:
                                                                     TextStyle(),
                                                               )

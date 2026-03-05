@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'transaction_item_model.dart';
 export 'transaction_item_model.dart';
@@ -832,10 +833,11 @@ class _TransactionItemWidgetState extends State<TransactionItemWidget> {
                                       ),
                                       SizedBox(
                                         width: 300.0,
-                                        child: Divider(
+                                        child: StyledDivider(
                                           thickness: 2.0,
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
+                                          lineStyle: DividerLineStyle.dashed,
                                         ),
                                       ),
                                       Padding(

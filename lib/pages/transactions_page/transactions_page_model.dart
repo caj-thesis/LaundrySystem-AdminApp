@@ -11,6 +11,8 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
 
   bool isFilterCardVisible = false;
 
+  bool isShowFullList = true;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TextField widget.
@@ -37,7 +39,10 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
   set paymentStatusChipsValue(String? val) =>
       paymentStatusChipsValueController?.value = val != null ? [val] : [];
   // State field(s) for TransactionTable widget.
-  final transactionTableController =
+  final transactionTableController1 =
+      FlutterFlowDataTableController<TransactionsRecord>();
+  // State field(s) for TransactionTable widget.
+  final transactionTableController2 =
       FlutterFlowDataTableController<TransactionsRecord>();
 
   @override
@@ -48,6 +53,7 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
 
-    transactionTableController.dispose();
+    transactionTableController1.dispose();
+    transactionTableController2.dispose();
   }
 }

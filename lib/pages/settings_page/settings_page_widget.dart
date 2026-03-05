@@ -565,21 +565,14 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                           containerSettingsRecord
                                                               ?.overdueHours,
                                                     ),
-                                                    options: List<int>.from([
-                                                      24,
-                                                      48,
-                                                      72,
-                                                      96,
-                                                      120,
-                                                      144
-                                                    ]),
+                                                    options: List<int>.from(
+                                                        [24, 48, 72, 96, 120]),
                                                     optionLabels: [
                                                       '1  day',
                                                       '2 days',
                                                       '3 days',
                                                       '4 days',
-                                                      '5 days',
-                                                      ''
+                                                      '5 days'
                                                     ],
                                                     onChanged: (val) =>
                                                         safeSetState(() => _model
@@ -606,7 +599,6 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                                           context)
                                                                       .bodyMediumIsCustom,
                                                             ),
-                                                    hintText: '2 days',
                                                     icon: Icon(
                                                       Icons
                                                           .keyboard_arrow_down_rounded,
@@ -652,8 +644,28 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                     containerSettingsRecord
                                                         .overdueHours,
                                               ));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Settings successfully changed.',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
                                             },
-                                            text: 'Submit',
+                                            text: 'Update',
                                             options: FFButtonOptions(
                                               height: 40.0,
                                               padding: EdgeInsetsDirectional
@@ -1426,15 +1438,29 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                 bedSheetPrice: double.tryParse(
                                                     _model
                                                         .textController6.text),
-                                                minClothesPrice: int.tryParse(
-                                                    _model
-                                                        .textController3.text),
-                                                minBedSheetPrice: int.tryParse(
-                                                    _model
-                                                        .textController4.text),
                                               ));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Settings successfully changed.',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
                                             },
-                                            text: 'Submit',
+                                            text: 'Update',
                                             options: FFButtonOptions(
                                               height: 40.0,
                                               padding: EdgeInsetsDirectional

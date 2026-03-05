@@ -40,15 +40,15 @@ class SettingsRecord extends FirestoreRecord {
   String get receiptFootnote => _receiptFootnote ?? '';
   bool hasReceiptFootnote() => _receiptFootnote != null;
 
-  // "minBedSheetPrice" field.
-  int? _minBedSheetPrice;
-  int get minBedSheetPrice => _minBedSheetPrice ?? 0;
-  bool hasMinBedSheetPrice() => _minBedSheetPrice != null;
-
   // "minClothesPrice" field.
-  int? _minClothesPrice;
-  int get minClothesPrice => _minClothesPrice ?? 0;
+  double? _minClothesPrice;
+  double get minClothesPrice => _minClothesPrice ?? 0.0;
   bool hasMinClothesPrice() => _minClothesPrice != null;
+
+  // "minBedSheetPrice" field.
+  double? _minBedSheetPrice;
+  double get minBedSheetPrice => _minBedSheetPrice ?? 0.0;
+  bool hasMinBedSheetPrice() => _minBedSheetPrice != null;
 
   void _initializeFields() {
     _clothesPrice = castToType<double>(snapshotData['clothesPrice']);
@@ -56,8 +56,8 @@ class SettingsRecord extends FirestoreRecord {
     _laundryShopName = snapshotData['laundryShopName'] as String?;
     _overdueHours = castToType<int>(snapshotData['overdueHours']);
     _receiptFootnote = snapshotData['receiptFootnote'] as String?;
-    _minBedSheetPrice = castToType<int>(snapshotData['minBedSheetPrice']);
-    _minClothesPrice = castToType<int>(snapshotData['minClothesPrice']);
+    _minClothesPrice = castToType<double>(snapshotData['minClothesPrice']);
+    _minBedSheetPrice = castToType<double>(snapshotData['minBedSheetPrice']);
   }
 
   static CollectionReference get collection =>
@@ -100,8 +100,8 @@ Map<String, dynamic> createSettingsRecordData({
   String? laundryShopName,
   int? overdueHours,
   String? receiptFootnote,
-  int? minBedSheetPrice,
-  int? minClothesPrice,
+  double? minClothesPrice,
+  double? minBedSheetPrice,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -110,8 +110,8 @@ Map<String, dynamic> createSettingsRecordData({
       'laundryShopName': laundryShopName,
       'overdueHours': overdueHours,
       'receiptFootnote': receiptFootnote,
-      'minBedSheetPrice': minBedSheetPrice,
       'minClothesPrice': minClothesPrice,
+      'minBedSheetPrice': minBedSheetPrice,
     }.withoutNulls,
   );
 
@@ -128,8 +128,8 @@ class SettingsRecordDocumentEquality implements Equality<SettingsRecord> {
         e1?.laundryShopName == e2?.laundryShopName &&
         e1?.overdueHours == e2?.overdueHours &&
         e1?.receiptFootnote == e2?.receiptFootnote &&
-        e1?.minBedSheetPrice == e2?.minBedSheetPrice &&
-        e1?.minClothesPrice == e2?.minClothesPrice;
+        e1?.minClothesPrice == e2?.minClothesPrice &&
+        e1?.minBedSheetPrice == e2?.minBedSheetPrice;
   }
 
   @override
@@ -139,8 +139,8 @@ class SettingsRecordDocumentEquality implements Equality<SettingsRecord> {
         e?.laundryShopName,
         e?.overdueHours,
         e?.receiptFootnote,
-        e?.minBedSheetPrice,
-        e?.minClothesPrice
+        e?.minClothesPrice,
+        e?.minBedSheetPrice
       ]);
 
   @override

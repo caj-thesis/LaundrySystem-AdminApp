@@ -35,11 +35,6 @@ class LockersRecord extends FirestoreRecord {
   bool get isConnected => _isConnected ?? false;
   bool hasIsConnected() => _isConnected != null;
 
-  // "lockerId" field.
-  int? _lockerId;
-  int get lockerId => _lockerId ?? 0;
-  bool hasLockerId() => _lockerId != null;
-
   // "status" field.
   String? _status;
   String get status => _status ?? '';
@@ -55,15 +50,20 @@ class LockersRecord extends FirestoreRecord {
   String get adminCommand => _adminCommand ?? '';
   bool hasAdminCommand() => _adminCommand != null;
 
+  // "lockerId" field.
+  String? _lockerId;
+  String get lockerId => _lockerId ?? '';
+  bool hasLockerId() => _lockerId != null;
+
   void _initializeFields() {
     _action = snapshotData['action'] as String?;
     _currentTransactionId = snapshotData['currentTransactionId'] as String?;
     _doorStatus = snapshotData['doorStatus'] as String?;
     _isConnected = snapshotData['isConnected'] as bool?;
-    _lockerId = castToType<int>(snapshotData['lockerId']);
     _status = snapshotData['status'] as String?;
     _timestamp = snapshotData['timestamp'] as DateTime?;
     _adminCommand = snapshotData['adminCommand'] as String?;
+    _lockerId = snapshotData['lockerId'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -105,10 +105,10 @@ Map<String, dynamic> createLockersRecordData({
   String? currentTransactionId,
   String? doorStatus,
   bool? isConnected,
-  int? lockerId,
   String? status,
   DateTime? timestamp,
   String? adminCommand,
+  String? lockerId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -116,10 +116,10 @@ Map<String, dynamic> createLockersRecordData({
       'currentTransactionId': currentTransactionId,
       'doorStatus': doorStatus,
       'isConnected': isConnected,
-      'lockerId': lockerId,
       'status': status,
       'timestamp': timestamp,
       'adminCommand': adminCommand,
+      'lockerId': lockerId,
     }.withoutNulls,
   );
 
@@ -135,10 +135,10 @@ class LockersRecordDocumentEquality implements Equality<LockersRecord> {
         e1?.currentTransactionId == e2?.currentTransactionId &&
         e1?.doorStatus == e2?.doorStatus &&
         e1?.isConnected == e2?.isConnected &&
-        e1?.lockerId == e2?.lockerId &&
         e1?.status == e2?.status &&
         e1?.timestamp == e2?.timestamp &&
-        e1?.adminCommand == e2?.adminCommand;
+        e1?.adminCommand == e2?.adminCommand &&
+        e1?.lockerId == e2?.lockerId;
   }
 
   @override
@@ -147,10 +147,10 @@ class LockersRecordDocumentEquality implements Equality<LockersRecord> {
         e?.currentTransactionId,
         e?.doorStatus,
         e?.isConnected,
-        e?.lockerId,
         e?.status,
         e?.timestamp,
-        e?.adminCommand
+        e?.adminCommand,
+        e?.lockerId
       ]);
 
   @override
