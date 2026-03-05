@@ -1,8 +1,6 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -76,20 +74,11 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
                 children: [
                   StreamBuilder<List<TransactionsRecord>>(
                     stream: queryTransactionsRecord(
-                      queryBuilder: (transactionsRecord) => transactionsRecord
-                          .where(
-                            'status',
-                            isEqualTo: 'Completed',
-                          )
-                          .where(
-                            'droppedAt',
-                            isGreaterThanOrEqualTo: functions
-                                .getStartDate(_model.choiceChipsValue!),
-                          )
-                          .where(
-                            'droppedAt',
-                            isLessThanOrEqualTo: getCurrentTimestamp,
-                          ),
+                      queryBuilder: (transactionsRecord) =>
+                          transactionsRecord.where(
+                        'status',
+                        isEqualTo: 'Completed',
+                      ),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
@@ -158,83 +147,6 @@ class _SalesPageWidgetState extends State<SalesPageWidget> {
                                             !FlutterFlowTheme.of(context)
                                                 .bodyMediumIsCustom,
                                       ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: FlutterFlowChoiceChips(
-                                    options: [
-                                      ChipData('Daily'),
-                                      ChipData('Weekly'),
-                                      ChipData('Monthly')
-                                    ],
-                                    onChanged: (val) async {
-                                      safeSetState(() => _model
-                                          .choiceChipsValue = val?.firstOrNull);
-                                      _model.selectedFilter =
-                                          _model.choiceChipsValue!;
-                                      safeSetState(() {});
-                                    },
-                                    selectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                      iconColor: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      iconSize: 16.0,
-                                      elevation: 0.0,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    unselectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
-                                      iconColor: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      iconSize: 16.0,
-                                      elevation: 0.0,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    chipSpacing: 8.0,
-                                    rowSpacing: 8.0,
-                                    multiselect: false,
-                                    initialized:
-                                        _model.choiceChipsValue != null,
-                                    alignment: WrapAlignment.start,
-                                    controller:
-                                        _model.choiceChipsValueController ??=
-                                            FormFieldController<List<String>>(
-                                      [_model.selectedFilter],
-                                    ),
-                                    wrapped: true,
-                                  ),
                                 ),
                               ),
                               Padding(

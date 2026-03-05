@@ -21,20 +21,6 @@
           "order": "ASCENDING"
         }
       ]
-    },
-    {
-      "collectionGroup": "transactions",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "droppedAt",
-          "order": "ASCENDING"
-        }
-      ]
     }
   ]
 }
